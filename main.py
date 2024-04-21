@@ -1,5 +1,5 @@
-# Made By AKShaheen <abdelazizshaheen162@gmail.com> For Python Workshop In Cic
-# Forked by 
+# Made By Shaheen <abdelazizshaheen162@gmail.com> For Python Workshop In Cic
+#forked by YLabdelraouf <Youssefi_i06103@cic-cairo.com>For Python Workshop In Cic
 
 import pygame
 import random
@@ -14,10 +14,10 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Snake Game")
 
 # Colors
-BGCOLOR = (57, 0, 153)
+BGCOLOR = (0, 0, 255)
 TEXT_COLOR = (255, 255, 179)
-FOOD_COLOR = (220,171,107)
-SNAKE_COLOR = (255, 0, 84)
+FOOD_COLOR = (0,0,0)
+SNAKE_COLOR = (255, 250, 240)
 
 # Snake properties
 SNAKE_SIZE = 20
@@ -27,7 +27,9 @@ SNAKE_DIRECTION = (1, 0)
 
 # Food properties
 FOOD_SIZE = 20
+FOOD_EXTRA=30
 food_pos = (random.randint(0, WIDTH - FOOD_SIZE), random.randint(0, HEIGHT - FOOD_SIZE))
+food_EXTEA = (random.randint(0, WIDTH - FOOD_EXTRA), random.randint(0, HEIGHT - FOOD_EXTRA))
 
 # Score
 score = 0
@@ -79,11 +81,11 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w or event.key == pygame.K_UP and SNAKE_DIRECTION != (0, 1):
                 SNAKE_DIRECTION = (0, -1)
-            elif event.key == pygame.K_DOWN and SNAKE_DIRECTION != (0, -1):
+            elif event.key == pygame.K_DOWN or event.key == pygame.K_s and SNAKE_DIRECTION != (0, -1):
                 SNAKE_DIRECTION = (0, 1)
-            elif event.key == pygame.K_LEFT and SNAKE_DIRECTION != (1, 0):
+            elif event.key == pygame.K_LEFT or event.key == pygame.K_a and SNAKE_DIRECTION != (1, 0):
                 SNAKE_DIRECTION = (-1, 0)
-            elif event.key == pygame.K_RIGHT and SNAKE_DIRECTION != (-1, 0):
+            elif event.key == pygame.K_RIGHT or event.key == pygame.K_d and SNAKE_DIRECTION != (-1, 0):
                 SNAKE_DIRECTION = (1, 0)
 
     # Move the snake
@@ -104,6 +106,7 @@ while running:
     if (SNAKE_BODY[0][0] < 0 or SNAKE_BODY[0][0] >= WIDTH or
         SNAKE_BODY[0][1] < 0 or SNAKE_BODY[0][1] >= HEIGHT or
         len(SNAKE_BODY) != len(set(SNAKE_BODY))):
+        highest_score=score
         reset_game()
 
     # Draw everything
@@ -112,10 +115,36 @@ while running:
 
     for segment in SNAKE_BODY:
         pygame.draw.rect(WINDOW, SNAKE_COLOR, (*segment, SNAKE_SIZE, SNAKE_SIZE))
+    if score>5:
+        SNAKE_SPEED=30
+    if score>10:
+        SNAKE_SPEED=20
+        WIDTH, HEIGHT = 550, 350
+        WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+    if score>15:
+        SNAKE_SPEED=30
+        WIDTH, HEIGHT = 550, 350
+        WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+       # SNAKE_COLOR = (0, 0, 0)
+    if score>20:
+        SNAKE_SPEED=30
+        WIDTH, HEIGHT = 500, 300
+        WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+        SNAKE_COLOR = (0, 0, 0)
+
+    
+   
+
+
+
+
 
     display_score()
     display_highest_score()
     pygame.display.update()
     clock.tick(10)
 
+
+
 pygame.quit()
+
